@@ -1,7 +1,7 @@
 (ns day-21.core-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :as test]
             [day-21.core :refer :all]))
 
-(deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
+(test/deftest day21-test
+  (test/testing "comprobando operar"
+    (test/is (= (operar) '(152)))))
