@@ -52,6 +52,29 @@
                              lista-salida)]
           (recur nueva-linea nueva-col nueva-salida))))))
 
+; actualizar-objetos :: (Diccionario) -> (Diccionario)
+(defn actualizar-objetos [lista ancho alto]
+  (->> lista 
+       (map (fn [elt]
+              (let [direccion (get elt :dir)
+                    posicion (get elt :pos)
+                    x (first posicion)
+                    y (second posicion)
+                    dx (first direccion)
+                    dy (second direccion)
+                    nuevo-x (cond (and (= x 1)
+                                       (= dx -1)) (- ancho 1)
+                                  (and (= x (- ancho 1))
+                                       (= dx 1)) 1
+                                  :else (+ x dx))
+                    nuevo-y (cond (and (= y 1)
+                                       (= dy -1)) (- alto 1)
+                                  (and (= y (- alto 1))
+                                       (= dy 1)) 1
+                                  :else (+ y dy))
+                    nueva-posicion (list nuevo-x nuevo-y)]
+                {:pos nueva-posicion, :dir direccion})))))
+
 (defn -main []
   (let [lista-datos (->> "./resources/input.lst"
                          (slurp)
