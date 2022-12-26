@@ -46,7 +46,8 @@
               nueva-salida (if (or (= elemento "^")
                                    (= elemento "v")
                                    (= elemento "<")
-                                   (= elemento ">")) 
+                                   (= elemento ">")
+                                   (= elemento "#")) 
                              (conj lista-salida objeto)
                              lista-salida)]
           (recur nueva-linea nueva-col nueva-salida))))))
