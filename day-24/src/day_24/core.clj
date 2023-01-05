@@ -1,12 +1,15 @@
 (ns day-24.core
   (:gen-class)
-  (:require [clojure.string :as st]))
+  (:require [clojure.string :as st])
+  (:require [bogus.core :as bg]))
 
 ; crear-array2D :: Int -> Int -> A -> [[A]]
 (defn crear-array2D [nlin ncol elt]
   (->> elt
        (repeat ncol)
-       (repeat nlin)))
+       (vec)
+       (repeat nlin)
+       (vec)))
 
 ; escribir-array2D :: [[A]] -> Int -> Int -> A -> [[A]]
 (defn escribir-array2D [ary linea col valor]
@@ -74,6 +77,29 @@
                                   :else (+ y dy))
                     nueva-posicion (list nuevo-x nuevo-y)]
                 {:pos nueva-posicion, :dir direccion})))))
+
+; imprimir-tablero :: Int -> Int -> (Diccionario) -> Array2D
+(defn imprimir-tablero [nfil ncol objetos]
+  (let [tablero (crear-array2D nfil ncol ".")]
+    (loop [lista-objetos objetos
+           tablero-bucle tablero]
+      (if (= lista-objetos '())
+        tablero-bucle
+        (let [nueva-lista-objetos (rest lista-objetos)
+              elt (first lista-objetos)
+              elt-pos (get elt :pos)
+              elt-lin (first elt-pos)
+              elt-col (second elt-pos)
+              elt-dir (get elt :dir)
+              elt-dlin (first elt-dir)
+              elt-dcol (second elt-dir)
+              elt-val (cond (= elt-dlin 1) "v"
+                            (= elt-dlin -1) "^"
+                            (= elt-dcol 1) ">"
+                            (= elt-dcol -1) "<"
+                            :else "#")
+              nuevo-tablero (escribir-array2D tablero-bucle elt-lin elt-col elt-val)]
+          (recur nueva-lista-objetos nuevo-tablero))))))
 
 (defn -main []
   (let [lista-datos (->> "./resources/input.lst"

@@ -16,6 +16,13 @@
                ["#" "." "." "." "v" "." "#"]
                ["#" "." "." "." "." "." "#"]
                ["#" "#" "#" "#" "#" "." "#"]]
+        ary-4 [["#" "." "#" "#" "#" "#" "#"]
+               ["#" "." "." "." "." "." "#"]
+               ["#" "." ">" "." "." "." "#"]
+               ["#" "." "." "." "." "." "#"]
+               ["#" "." "." "." "." "." "#"]
+               ["#" "." "." "." "v" "." "#"]
+               ["#" "#" "#" "#" "#" "." "#"]]
         inicial '({:pos (0 0), :dir (0 0)}
                   {:pos (0 2), :dir (0 0)}
                   {:pos (0 3), :dir (0 0)}
@@ -71,4 +78,7 @@
     (test/testing "Obtener objetos desde el tablero"
       (test/is (= (obtener-objetos ary-3) inicial)))
     (test/testing "Mover objetos por el tablero"
-      (test/is (= (actualizar-objetos inicial 7 7) posterior)))))
+      (test/is (= (actualizar-objetos inicial 7 7) posterior)))
+    (test/testing "Imprimimos tableros"
+      (test/is (= (imprimir-tablero 7 7 inicial) ary-3))
+      (test/is (= (imprimir-tablero 7 7 posterior) ary-4)))))
