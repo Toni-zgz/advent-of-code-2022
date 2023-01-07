@@ -55,7 +55,7 @@
                              lista-salida)]
           (recur nueva-linea nueva-col nueva-salida))))))
 
-; actualizar-objetos :: (Diccionario) -> (Diccionario)
+; actualizar-objetos :: (Diccionario) -> Int -> Int -> (Diccionario)
 (defn actualizar-objetos [lista ancho alto]
   (->> lista 
        (map (fn [elt]
@@ -101,7 +101,7 @@
               nuevo-tablero (escribir-array2D tablero-bucle elt-lin elt-col elt-val)]
           (recur nueva-lista-objetos nuevo-tablero))))))
 
-; obtener-posiciones-validas :: Int -> Int -> [[A]] -> ((Int Int))
+; obtener-posiciones-validas :: Int -> Int -> [[A]] -> [(Int Int)]
 (defn obtener-posiciones-validas [lin col tablero]
   (let [posicion-valida (fn [lin col]
                           (if (= (leer-array2D tablero lin col) ".")
@@ -114,7 +114,8 @@
         izquierda (posicion-valida lin (- col 1))
         posiciones (list actual arriba abajo derecha izquierda)]
     (->> posiciones
-         (filter (fn [elt] (not (nil? elt)))))))
+         (filter (fn [elt] (not (nil? elt))))
+         (vec))))
 
 (defn -main []
   (let [lista-datos (->> "./resources/input.lst"
