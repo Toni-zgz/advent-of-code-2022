@@ -81,4 +81,6 @@
       (test/is (= (actualizar-objetos inicial 7 7) posterior)))
     (test/testing "Imprimimos tableros"
       (test/is (= (imprimir-tablero 7 7 inicial) ary-3))
-      (test/is (= (imprimir-tablero 7 7 posterior) ary-4)))))
+      (test/is (= (imprimir-tablero 7 7 posterior) ary-4)))
+    (test/testing "Obtener posiciones validas"
+      (test/is (= (obtener-posiciones-validas 5 4 ary-3) '((5 4) (5 5) (5 3)))))))

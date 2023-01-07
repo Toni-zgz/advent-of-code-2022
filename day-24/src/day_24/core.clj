@@ -78,7 +78,7 @@
                     nueva-posicion (list nuevo-x nuevo-y)]
                 {:pos nueva-posicion, :dir direccion})))))
 
-; imprimir-tablero :: Int -> Int -> (Diccionario) -> Array2D
+; imprimir-tablero :: Int -> Int -> (Diccionario) -> [[A]]
 (defn imprimir-tablero [nfil ncol objetos]
   (let [tablero (crear-array2D nfil ncol ".")]
     (loop [lista-objetos objetos
@@ -100,6 +100,21 @@
                             :else "#")
               nuevo-tablero (escribir-array2D tablero-bucle elt-lin elt-col elt-val)]
           (recur nueva-lista-objetos nuevo-tablero))))))
+
+; obtener-posiciones-validas :: Int -> Int -> [[A]] -> ((Int Int))
+(defn obtener-posiciones-validas [lin col tablero]
+  (let [posicion-valida (fn [lin col]
+                          (if (= (leer-array2D tablero lin col) ".")
+                            (list lin col)
+                            nil))
+        actual (posicion-valida lin col)
+        arriba (posicion-valida (- lin 1) col)
+        abajo (posicion-valida (+ lin 1) col)
+        derecha (posicion-valida lin (+ col 1))
+        izquierda (posicion-valida lin (- col 1))
+        posiciones (list actual arriba abajo derecha izquierda)]
+    (->> posiciones
+         (filter (fn [elt] (not (nil? elt)))))))
 
 (defn -main []
   (let [lista-datos (->> "./resources/input.lst"
